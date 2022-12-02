@@ -9,26 +9,28 @@ int main(void){
     
     char one, two; 
     int score = 0; 
-    // 1 = rock, 2 = paper, 3 = scissors 
-    // A         B          C
+    
     while (!feof(fptr)){
         fscanf(fptr, "%c %c ", &one, &two); 
-        
-        if (two == 'X'){ // loss 
-            if (one == 'A') score += 3; 
-            else if (one == 'B') score += 1; 
-            else score+=2; 
+
+        if (two == 'X'){
+            two = 'A';  // rock
+            score++; 
         }
-        else if (two == 'Y'){ // draw
-            if (one == 'A') score += 1 + 3; 
-            else if (one == 'B') score += 2 + 3; 
-            else score += 6; 
+        else if (two == 'Y'){
+            two = 'B';  // paper 
+            score += 2; 
         }
-        else if (two == 'Z'){ // win
-            if (one == 'A') score += 2 + 6; 
-            else if (one == 'B') score += 3 + 6; 
-            else score += 1 + 6; 
+        else if (two == 'Z'){
+            two = 'C';  // scissors 
+            score += 3; 
         }
+
+        if (one == two) score += 3; 
+        else if (!(one == 'A' && two == 'C')
+                && !(one == 'B' && two == 'A')
+                && !(one == 'C' && two == 'B')) score += 6; 
+
     }
 
     printf("%d\n", score); 
