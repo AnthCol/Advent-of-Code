@@ -3,22 +3,20 @@
 using namespace std; 
 
 int main(void){
-    FILE * fptr = fopen("input.txt", "r"); 
-    char * string = (char*)malloc(sizeof(char) * 10000); 
-    int index = 0, sum = 0; 
+    ifstream fptr; 
+    fptr.open("input.txt"); 
+
+    string s = ""; 
     vector<int> vec; 
+
+    int index = 0, sum = 0; 
  
-    while (!feof(fptr)){
+    while (!fptr.eof()){
         
     }
 
 
-    printf(" ", ); 
-
-
-    fclose(fptr); 
-    free(string); 
-
+    
 
     return 0; 
 }
