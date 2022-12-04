@@ -3,20 +3,18 @@
 using namespace std; 
 
 int main(void){
-    ifstream fptr; 
-    fptr.open("input.txt"); 
+    ifstream fptr("input.txt"); 
 
     string s = ""; 
     vector<int> vec; 
 
     int index = 0, sum = 0; 
  
-    while (!fptr.eof()){
+    while (getline(fptr, s)){
         
-    }
+    }   
 
 
-    
 
     return 0; 
 }
