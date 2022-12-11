@@ -62,8 +62,6 @@ int main(void){
             if (product > max) max = product;  
         }
     }  
-
     printf("%d\n", max); 
-
     return 0; 
 }
