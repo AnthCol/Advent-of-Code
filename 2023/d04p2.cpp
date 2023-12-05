@@ -33,15 +33,9 @@ int main(void)
 
         int matches = 0; 
         for (int card_num : card)
-        {
             for (int win_num : win)
-            {
-                if (card_num == win_num)
-                {
-                    matches += 1; 
-                }
-            }
-        }
+                matches += (card_num == win_num); 
+        
         matches_per_card.push_back(matches);      
     }   
     
@@ -54,11 +48,9 @@ int main(void)
         for (int j = 1; j <= matches_per_card[i]; j++)
         {
             if (i + j == cards.size())
-            {
                 break; 
-            }
 
-            cards[i + j] += 1 * cards[i]; 
+            cards[i + j] += cards[i]; 
         } 
     }
 
