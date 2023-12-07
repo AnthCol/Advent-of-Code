@@ -45,8 +45,6 @@ void assign_type (hand * h)
 
     umap[highest_char] += j_count; 
 
-    h->type = -1; 
-
     if (count_if(umap.begin(), umap.end(), [](pair<char, int> p){ return p.second == 5; }))
         h->type = FIVE_KIND; 
     else if (count_if(umap.begin(), umap.end(), [](pair<char, int> p){ return p.second == 4; }))

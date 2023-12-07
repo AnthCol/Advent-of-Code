@@ -25,8 +25,6 @@ void assign_type (hand * h)
     for (char c : h->cards)
         (umap.find(c) != umap.end()) ? (umap[c] += 1) : (umap[c] = 1); 
 
-    h->type = -1; 
-
     if (count_if(umap.begin(), umap.end(), [](pair<char, int> p){ return p.second == 5; }))
         h->type = FIVE_KIND; 
     else if (count_if(umap.begin(), umap.end(), [](pair<char, int> p){ return p.second == 4; }))
