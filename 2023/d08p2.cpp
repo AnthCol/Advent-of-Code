@@ -16,8 +16,6 @@ int is_prime_factor(int potential_prime_factor, int num)
 }
 
 
-
-
 int main(void)
 {
     ifstream fptr("input"); 
