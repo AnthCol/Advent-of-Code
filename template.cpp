@@ -3,7 +3,6 @@ using namespace std;
 
 int main(void)
 {
-
     ifstream fptr("input"); 
     string s; 
 
