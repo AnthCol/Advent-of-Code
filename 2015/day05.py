@@ -17,7 +17,12 @@ with open(sys.argv[1], "r") as f:
         for i in range(len(line) - 1):
             twos.append(line[i] + line[i + 1])
 
+        twostwo = [line[i : i + 1] for i in range(len(line))]
         threes = [line[i : i + 3] for i in range(len(line))]
+        
+        if twos == twostwo:
+            print("EQUAL")
+
 
         two_check = False
         three_check = False
