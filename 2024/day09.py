@@ -1,13 +1,46 @@
 # PART TWO
 import sys
 
+def replace(space_locs, file_locs, disk):
+    d = disk
+    i = 0
+    while i < len(file_locs):
+        space = space_locs[i]
+        file = file_locs[i]
+        d[space], d[file] = d[file], d[space]
+        i += 1
+
+    unused = []
+    if len(file_locs) < len(space_locs):
+        unused = space_locs[i:]
+
+    return d, unused
+
+
+def update_spaces(space_locs, to_add):
+    extended = False
+
+    for i in range(len(space_locs)):
+        if space_locs[i][-1] == to_add[0] - 1:
+            space_locs[i].extend(to_add)
+            extended = True
+            break
+        elif space_locs[i][0] == to_add[-1] + 1:
+            space_locs[i] = to_add + space_locs[i]
+            extended = True
+            break
+
+    if not extended:
+        space_locs.append(to_add)
+
+
 with open(sys.argv[1], "r") as f:
     diskmap = f.read().strip()
 
 file_id = 0
 curr = 0
 disk = []
-files = []
+files = {}
 spaces = []
 
 for i in range(len(diskmap)):
@@ -18,75 +51,45 @@ for i in range(len(diskmap)):
     
     if i % 2 == 0:
         disk.extend([file_id] * number)
-        files.append((file_id, [curr + j for j in range(number)]))
+        files[file_id] =  [curr + j for j in range(number)]
         file_id += 1
     else:
         disk.extend([-1] * number)
         spaces.append([curr + j for j in range(number)])
 
-    curr += number
-
-replaced = True
-while replaced:
-    d = disk.copy()
-
-    replaced = False
-
-    last_file = files[-1]
-    file_id = last_file[0]
-    file_len = len(last_file[1]) 
-    file_indices = last_file[1]
-    file_as_string = str(file_id) * file_len
-
-    space_indices = spaces[0]     
-    space_len = len(spaces[0])
-
-    if file_len == space_len:
-        for i in space_indices:
-            d[i] = file_id
-        del spaces[0]
-        replaced = True
-        disk = d
-
-    elif file_len < space_len:
-        amount_consumed = 0
-        while amount_consumed < file_len:
-            
-            amount_consumed += 1
+    curr += number 
 
 
-    # If no replacement, there was not a place for that file. 
+current_id = file_id - 1
 
-        for i in space_indices:
-            if i < file_len:
+while current_id >= 0 :
+    spaces.sort()
 
+    for i in range(len(spaces)):
+        s = spaces[i]
+        f = files[current_id]
 
-    
+        # If the space starts after the file, don't replace it
+        if s[0] > f[-1]:
+            continue
 
+        if len(s) == len(f):
+            disk, _ = replace(s, f, disk)
+            del spaces[i]
+            update_spaces(spaces, f)
+            break 
 
-# number_locations = []
-# blank_locations = []
+        elif len(s) > len(f):
+            disk, unused = replace(s, f, disk)
+            del spaces[i]
+            update_spaces(spaces, f)
+            update_spaces(spaces, unused)
+            break
 
-# for i, value in enumerate(disk):
-#     if value != -1:
-#         number_locations.append(i)
-#     else:
-#         blank_locations.append(i)
-
-
-# j = len(number_locations) - 1
-# for i in range(len(blank_locations)):
-#     blank_loc = blank_locations[i]
-#     num_loc = number_locations[j]
-
-#     if num_loc < blank_loc:
-#         break
-
-#     disk[num_loc], disk[blank_loc] = disk[blank_loc], disk[num_loc]
-#     j -= 1
+    current_id -= 1
 
 
-# print(sum(i * value for i, value in enumerate(disk) if value > 0))
+print(sum(i * value for i, value in enumerate(disk) if value > 0))
 
 
 # PART ONE
